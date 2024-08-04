@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdeaKeeper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>IdeaKeeper</h1>
+            <nav class="toolbar">
+                <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <span id="userInfo" style="display: none;"></span>
+                <button id="exportBtn"><i class="fas fa-file-export"></i> Export</button>
+                <button id="importBtn"><i class="fas fa-file-import"></i> Import</button>
+            </nav>
+        </header>
+        <div class="content-header">
+            <div class="tabs">
+                <button id="listViewBtn" class="tab active"><i class="fas fa-list"></i> List View</button>
+                <button id="cloudViewBtn" class="tab"><i class="fas fa-cloud"></i> Cloud View</button>
+            </div>
+            <button id="newIdeaBtn" class="primary-btn"><i class="fas fa-plus"></i> New Idea</button>
+        </div>
+        <main>
+            <div id="listView" class="view active">
+                <div class="list-controls">
+                    <input type="text" id="searchInput" placeholder="Search ideas...">
+                    <select id="sortSelect">
+                        <option value="dateDesc">Date (Newest First)</option>
+                        <option value="dateAsc">Date (Oldest First)</option>
+                        <option value="titleAsc">Title (A-Z)</option>
+                        <option value="titleDesc">Title (Z-A)</option>
+                        <option value="status">Status</option>
+                    </select>
+                </div>
+                <div id="ideasList">
+                    <!-- Ideas will be populated here -->
+                </div>
+            </div>
+            <div id="cloudView" class="view">
+                <!-- Cloud view will be rendered here -->
+            </div>
+        </main>
+        <div id="ideaModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create/Edit Idea</h2>
+                <input type="text" id="ideaTitle" placeholder="Title">
+                <textarea id="ideaDescription" placeholder="Description"></textarea>
+                <div class="emoji-input-container">
+                    <input type="text" id="ideaEmoji" placeholder="Emoji">
+                    <button id="emojiPickerBtn">📋</button>
+                </div>
+                <emoji-picker style="display: none;"></emoji-picker>
+                <input type="text" id="ideaTags" placeholder="Tags (comma-separated)">
+                <select id="ideaStatus">
+                    <option value="todo">To Do</option>
+                    <option value="doing">Doing</option>
+                    <option value="done">Done</option>
+                </select>
+                <button id="saveIdeaBtn" class="primary-btn">Save Idea</button>
+            </div>
+        </div>
+        <div id="confirmDialog" class="modal">
+            <div class="modal-content">
+                <h2>Confirm Delete</h2>
+                <p>Are you sure you want to delete this idea?</p>
+                <button id="confirmYes" class="primary-btn">Yes</button>
+                <button id="confirmNo">No</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://js.puter.com/v2/"></script>
+    <script type="module" src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => console.log('Service worker registered', reg))
+                .catch((err) => console.log('Service worker not registered', err));
+        }
+    </script>
+</body>
+</html>
